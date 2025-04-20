@@ -7,7 +7,7 @@ public sealed class Todo : Entity<Todo>
 {
     public override Identifier<Todo> Id { get; init; }
     public Descriptor Description { get; init; }
-    public DateTimeOffset? DueDate { get; init; }
+    public DateOnly? DueDate { get; init; }
     public DateTimeOffset? CloseDate { get; init; }
     public DateTimeOffset CreateDate { get; init; }
     public DateTimeOffset? UpdateDate { get; init; }
