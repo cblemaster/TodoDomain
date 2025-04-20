@@ -1,4 +1,4 @@
 ﻿
 namespace TodoDomain.Domain.ValueObjects;
 
-public record struct TodoDates(DateOnly? DueDate, DateTimeOffset? CloseDate);
+public record struct TodoDates(DateOnly? DueDate, DateTimeOffset? CompleteDate);
