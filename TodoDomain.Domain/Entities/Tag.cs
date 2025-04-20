@@ -1,10 +1,12 @@
 ﻿
+using TodoDomain.Domain.ValueObjects;
+
 namespace TodoDomain.Domain.Entities;
 
 public sealed class Tag : Entity<Tag>
 {
-    public override Guid Id { get; init; }
-    public string Name { get; init; } = string.Empty;
+    public override Identifier<Tag> Id { get; init; }
+    public Descriptor Name { get; init; }
     public DateTimeOffset CreateDate { get; init; }
     public DateTimeOffset? UpdateDate { get; init; }
     public IEnumerable<Todo> Todos { get; init; } = [];

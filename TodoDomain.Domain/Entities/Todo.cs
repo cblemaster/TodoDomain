@@ -1,10 +1,12 @@
 ﻿
+using TodoDomain.Domain.ValueObjects;
+
 namespace TodoDomain.Domain.Entities;
 
 public sealed class Todo : Entity<Todo>
 {
-    public override Guid Id { get; init; }
-    public string Description { get; init; } = string.Empty;
+    public override Identifier<Todo> Id { get; init; }
+    public Descriptor Description { get; init; }
     public DateTimeOffset? DueDate { get; init; }
     public DateTimeOffset? CloseDate { get; init; }
     public DateTimeOffset CreateDate { get; init; }
