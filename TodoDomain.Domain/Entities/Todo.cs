@@ -14,7 +14,7 @@ public sealed class Todo : Entity<Todo>
     public IEnumerable<Tag> Tags { get; init; } = [];
     public IEnumerable<Category> Categories { get; init; } = [];
 
-    private Todo(string description, DateOnly? dueDate)
+    public Todo(string description, DateOnly? dueDate)
     {
         if (string.IsNullOrEmpty(description))
         {

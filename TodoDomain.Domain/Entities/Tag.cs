@@ -12,7 +12,7 @@ public sealed class Tag : Entity<Tag>
     public required override EntityDates EntityDates { get; init; }
     public IEnumerable<Todo> Todos { get; init; } = [];
 
-    private Tag(string name)
+    public Tag(string name)
     {
         if (string.IsNullOrEmpty(name))
         {

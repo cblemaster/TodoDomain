@@ -12,7 +12,7 @@ public sealed class Category : Entity<Category>
     public required override EntityDates EntityDates { get; init; }
     public IEnumerable<Todo> Todos { get; init; } = [];
 
-    private Category(string name)
+    public Category(string name)
     {
         if (string.IsNullOrEmpty(name))
         {
