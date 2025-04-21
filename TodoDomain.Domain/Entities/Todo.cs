@@ -5,6 +5,8 @@ namespace TodoDomain.Domain.Entities;
 
 public sealed class Todo : Entity<Todo>
 {
+    private const int DESCRIPTION_MAX_LENGTH = 255;
+    
     public required override Identifier<Todo> Id { get; init; }
     public required Descriptor Description { get; init; }
     public required TodoDates TodoDates { get; init; }
@@ -18,9 +20,9 @@ public sealed class Todo : Entity<Todo>
         {
             throw new ArgumentException($"{nameof(description)} is required", nameof(description));
         }
-        else if (description.Length > 255)
+        else if (description.Length > DESCRIPTION_MAX_LENGTH)
         {
-            throw new ArgumentException($"{nameof(description)} must be 255 characters or fewer", nameof(description));
+            throw new ArgumentException($"{nameof(description)} must be {DESCRIPTION_MAX_LENGTH} characters or fewer", nameof(description));
         }
         else
         {

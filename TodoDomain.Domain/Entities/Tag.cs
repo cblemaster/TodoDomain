@@ -5,6 +5,8 @@ namespace TodoDomain.Domain.Entities;
 
 public sealed class Tag : Entity<Tag>
 {
+    private const int NAME_MAX_LENGTH = 20;
+
     public required override Identifier<Tag> Id { get; init; }
     public required Descriptor Name { get; init; }
     public required override EntityDates EntityDates { get; init; }
@@ -16,9 +18,9 @@ public sealed class Tag : Entity<Tag>
         {
             throw new ArgumentException($"{nameof(name)} is required", nameof(name));
         }
-        else if (name.Length > 20)
+        else if (name.Length > NAME_MAX_LENGTH)
         {
-            throw new ArgumentException($"{nameof(name)} must be 20 characters or fewer", nameof(name));
+            throw new ArgumentException($"{nameof(name)} must be {NAME_MAX_LENGTH} characters or fewer", nameof(name));
         }
         else
         {
