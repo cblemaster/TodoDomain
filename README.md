@@ -22,4 +22,5 @@ A single-context domain model with entities for a todo list application
 + Determine if a category can be deleted (e.g., does it have any todos?)
 + Determine if a tag can be deleted (e.g., does it have any todos?)
 ### Improvement opportunities
-TBD
++ Implement a results type that can return success or failure, to replace the exceptions thrown by validation (which are not handled :( )
++ Review access modifiers and the public domain surface 
