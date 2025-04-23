@@ -31,6 +31,7 @@ public sealed class Todo : Entity<Todo>
             Description = Description with { Value = description };
             EntityDates = EntityDates with { UpdateDate = DateTimeOffset.UtcNow };
         }
+        // TODO: domain cannot update complete todos exception
     }
     public void UpdateDueDate(DateOnly? dueDate)
     {
@@ -94,10 +95,12 @@ public sealed class Todo : Entity<Todo>
         if (string.IsNullOrEmpty(description))
         {
             throw new ArgumentException($"{nameof(description)} is required", nameof(description));
+            // TODO: domain validation exception
         }
         else if (description.Length > DESCRIPTION_MAX_LENGTH)
         {
-            throw new ArgumentException($"{nameof(description)} must be  {DESCRIPTION_MAX_LENGTH}  characters or fewerer", nameof(description));
+            throw new ArgumentException($"{nameof(description)} must be  {DESCRIPTION_MAX_LENGTH}  characters or fewer", nameof(description));
+            // TODO: domain validation exception
         }
     }
 }

@@ -35,10 +35,12 @@ public class Attribute<T> : Entity<Attribute<T>>
         if (string.IsNullOrEmpty(name))
         {
             throw new ArgumentException($"{nameof(name)} is required", nameof(name));
+            // TODO: domain validation exception
         }
         else if (name.Length > _maxLength)
         {
             throw new ArgumentException($"{nameof(name)} must be  {_maxLength}  characters or fewer", nameof(name));
+            // TODO: domain validation exception
         }
     }
 }
