@@ -10,7 +10,7 @@ public sealed class Todo : Entity<Todo>
     public required override Identifier<Todo> Id { get; init; }
     public Descriptor Description { get; private set; }
     public TodoDates TodoDates { get; private set; }
-    public required override EntityDates EntityDates { get; init; }
+    public override EntityDates EntityDates { get; protected set; }
     public IEnumerable<Tag> Tags { get; private set; } = [];
     public IEnumerable<Category> Categories { get; private set; } = [];
 
@@ -29,6 +29,7 @@ public sealed class Todo : Entity<Todo>
         {
             ValidateDescriptionOrThrow(description);
             Description = Description with { Value = description };
+            EntityDates = EntityDates with { UpdateDate = DateTimeOffset.UtcNow };
         }
     }
     public void UpdateDueDate(DateOnly? dueDate)
@@ -36,20 +37,57 @@ public sealed class Todo : Entity<Todo>
         if (TodoDates.CompleteDate is null)
         {
             TodoDates = TodoDates with { DueDate = dueDate };
+            EntityDates = EntityDates with { UpdateDate = DateTimeOffset.UtcNow };
         }
     }
-    public void ToggleComplete(bool isComplete) => TodoDates = isComplete
+    public void ToggleComplete(bool isComplete)
+    {
+        TodoDates = isComplete
             ? (TodoDates with { CompleteDate = DateTimeOffset.UtcNow })
             : (TodoDates with { CompleteDate = null });
+        EntityDates = EntityDates with { UpdateDate = DateTimeOffset.UtcNow };
+    }
 
-    public void AddTag(Tag tag) => Tags = Tags.Append(tag);
-    public void RemoveTag(Tag tag) => Tags = Tags.Where(t => t.Id != tag.Id);
-    public void AddCategory(Category category) => Categories = Categories.Append(category);
-    public void RemoveCategory(Category category) => Categories = Categories.Where(c => c.Id != category.Id);
-    public void AddTags(IEnumerable<Tag> tags) => Tags = Tags.Concat(tags);
-    public void RemoveTags(IEnumerable<Tag> tags) => Tags = Tags.Except(tags);
-    public void AddCategories(IEnumerable<Category> categories) => Categories = Categories.Concat(categories);
-    public void RemoveCategories(IEnumerable<Category> categories) => Categories = Categories.Except(categories);
+    public void AddTag(Tag tag)
+    {
+        Tags = Tags.Append(tag);
+        EntityDates = EntityDates with { UpdateDate = DateTimeOffset.UtcNow };
+    }
+    public void RemoveTag(Tag tag)
+    {
+        Tags = Tags.Where(t => t.Id != tag.Id);
+        EntityDates = EntityDates with { UpdateDate = DateTimeOffset.UtcNow };
+    }
+    public void AddCategory(Category category)
+    {
+        Categories = Categories.Append(category);
+        EntityDates = EntityDates with { UpdateDate = DateTimeOffset.UtcNow };
+    }
+    public void RemoveCategory(Category category)
+    {
+        Categories = Categories.Where(c => c != category);
+        EntityDates = EntityDates with { UpdateDate = DateTimeOffset.UtcNow };
+    }
+    public void AddTags(IEnumerable<Tag> tags)
+    {
+        Tags = Tags.Concat(tags);
+        EntityDates = EntityDates with { UpdateDate = DateTimeOffset.UtcNow };
+    }
+    public void RemoveTags(IEnumerable<Tag> tags)
+    {
+        Tags = Tags.Except(tags);
+        EntityDates = EntityDates with { UpdateDate = DateTimeOffset.UtcNow };
+    }
+    public void AddCategories(IEnumerable<Category> categories)
+    {
+        Categories = Categories.Concat(categories);
+        EntityDates = EntityDates with { UpdateDate = DateTimeOffset.UtcNow };
+    }
+    public void RemoveCategories(IEnumerable<Category> categories)
+    {
+        Categories = Categories.Except(categories);
+        EntityDates = EntityDates with { UpdateDate = DateTimeOffset.UtcNow };
+    }
 
     private static void ValidateDescriptionOrThrow(string description)
     {

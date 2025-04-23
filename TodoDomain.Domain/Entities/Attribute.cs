@@ -9,7 +9,7 @@ public class Attribute<T> : Entity<Attribute<T>>
 
     public override required Identifier<Attribute<T>> Id { get; init; }
     public Descriptor Name { get; private set; }
-    public required override EntityDates EntityDates { get; init; }
+    public override EntityDates EntityDates { get; protected set; }
     public IEnumerable<Todo> Todos { get; init; } = [];
 
     public Attribute(string name, int maxLength)
@@ -25,6 +25,7 @@ public class Attribute<T> : Entity<Attribute<T>>
     {
         ValidateNameOrThrow(name);
         Name = Name with { Value = name };
+        EntityDates = EntityDates with { UpdateDate = DateTimeOffset.UtcNow };
     }
 
     public bool CanDelete() => !Todos.Any();
