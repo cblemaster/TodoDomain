@@ -12,7 +12,7 @@ public class Attribute<T> : Entity<Attribute<T>>
     public override EntityDates EntityDates { get; protected set; }
     public IEnumerable<Todo> Todos { get; init; } = [];
 
-    public Attribute(string name, int maxLength)
+    protected Attribute(string name, int maxLength)
     {
         _maxLength = maxLength;
         ValidateNameOrThrow(name);
@@ -29,6 +29,7 @@ public class Attribute<T> : Entity<Attribute<T>>
     }
 
     public bool CanDelete() => !Todos.Any();
+
     private void ValidateNameOrThrow(string name)
     {
         if (string.IsNullOrEmpty(name))
@@ -37,7 +38,7 @@ public class Attribute<T> : Entity<Attribute<T>>
         }
         else if (name.Length > _maxLength)
         {
-            throw new ArgumentException($"{nameof(name)} must be  {_maxLength}  characters or fewerer", nameof(name));
+            throw new ArgumentException($"{nameof(name)} must be  {_maxLength}  characters or fewer", nameof(name));
         }
     }
 }
